@@ -266,7 +266,6 @@ public class Percolation {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        //TODO: DEBUG!!
 
         // Testing grid initialization
         StdOut.println("\nTesting grid initialization:\n");

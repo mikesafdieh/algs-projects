@@ -14,14 +14,8 @@
 //        public static void main(String[] args)        // test client (described below)
 //    }
 
-// NOTE: You can only use the following libraries:
-// StdIn, StdOut, StdRandom, StdStats, WeightedQuickUnionUF, and java.lang.
-
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdStats;
 import edu.princeton.cs.algs4.StdRandom;
-import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class PercolationStats {
 
@@ -32,10 +26,22 @@ public class PercolationStats {
     public PercolationStats(int n, int trials) {
         validateInputs(n, trials);
         TRIALS = trials;
+        thresholds = new double[TRIALS];
 
-        Percolation perc = new Percolation(n);
+        for (int i = 0; i < TRIALS; i++) {
+            Percolation perc = new Percolation(n);
 
-        //TODO: Fill in...
+            while (!perc.percolates()) {
+                int row = StdRandom.uniform(1, n + 1); // random int in [1, n+1) i.e. [1, n]
+                int col = StdRandom.uniform(1, n + 1); // random int in [1, n+1) i.e. [1, n]
+                if (!perc.isOpen(row, col))
+                    perc.open(row,col);
+            }
+            double openSites = perc.numberOfOpenSites();
+            double totalSites = n*n;
+            thresholds[i] = openSites / totalSites;
+        }
+
     }
 
     // sample mean of percolation threshold
@@ -50,14 +56,12 @@ public class PercolationStats {
 
     // low  endpoint of 95% confidence interval
     public double confidenceLo() {
-        //TODO: Fill in...
-        return -1;
+        return mean() - ( (1.96*stddev()) / Math.sqrt(TRIALS));
     }
 
     // high endpoint of 95% confidence interval
     public double confidenceHi() {
-        //TODO: Fill in...
-        return -1;
+        return mean() + ( (1.96*stddev()) / Math.sqrt(TRIALS));
     }
 
 
@@ -77,11 +81,20 @@ public class PercolationStats {
      *** TEST CLIENT ********************************************************************************************
      ************************************************************************************************************/
 
-    // test client (described below)
+    // test client
     public static void main(String[] args) {
-        //TODO: Fill in...
-        // perform the Monte Carlo Simulation T times
-        //TODO: Quickly look up Monte Carlo Simulation (Khan Academy).
+        int n = Integer.parseInt(args[0]);
+        int trials = Integer.parseInt(args[1]);
+
+        PercolationStats percStats = new PercolationStats(n, trials);
+        String meanString = "mean";
+        String stddevString = "stddev";
+        String confidenceString = "95% confidence interval";
+
+        System.out.printf("%-23s = %.18f\n", meanString, percStats.mean());
+        System.out.printf("%-23s = %.18f\n", stddevString, percStats.stddev());
+        System.out.printf("%-23s = [%.18f, %.18f]\n", confidenceString, percStats.confidenceLo(), percStats.confidenceHi());
+
     }
 
 
