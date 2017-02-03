@@ -24,7 +24,7 @@ import edu.princeton.cs.algs4.StdRandom;
  **********************************************************************************************************************/
 
 public class Deque<Item> implements Iterable<Item> {
-    
+
     private int n;            // number of elements in deque
     private DoubleNode first; // pointer to first element of deque
     private DoubleNode last;  // pointer to last element of deque
@@ -153,6 +153,42 @@ public class Deque<Item> implements Iterable<Item> {
      * unit testing (optional)
      */
     public static void main(String[] args) {
+        Deque<Integer> deque = new Deque<>();
+        System.out.println("Initial size: " + deque.size());
 
+        final int N = 12;
+        for (int i = 1; i <= N; i++)
+            deque.addFirst(i);
+        System.out.println("Size after inserts: " + deque.size());
+
+        for (Integer i : deque)
+            StdOut.print(i + " ");
+        System.out.println();
+        System.out.println("isEmpty(): " + deque.isEmpty());
+
+        for (int i = 1; i <= N; i++)
+            StdOut.print(deque.removeLast() + " ");
+        System.out.println("\nSize after deletions: " + deque.size());
+        System.out.println("isEmpty(): " + deque.isEmpty());
+
+
+
+        for (int i = 1; i <= N; i++)
+            deque.addLast(i);
+        System.out.println("\n\nSize after inserts: " + deque.size());
+
+        for (Integer i : deque)
+            StdOut.print(i + " ");
+        System.out.println();
+        System.out.println("isEmpty(): " + deque.isEmpty());
+
+        for (int i = 1; i <= N; i++)
+            StdOut.print(deque.removeFirst() + " ");
+        System.out.println("\nSize after deletions: " + deque.size());
+        System.out.println("isEmpty(): " + deque.isEmpty());
+
+//        deque.removeFirst();
+//        deque.removeLast();
+        // Both lines above throw exceptions, as expected :)
     }
 }
