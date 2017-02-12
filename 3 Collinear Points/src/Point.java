@@ -62,7 +62,7 @@ public class Point implements Comparable<Point> {
         if (this.x == that.x && this.y == that.y) return Double.NEGATIVE_INFINITY;
         if (this.x == that.x) return Double.POSITIVE_INFINITY;
         if (this.y == that.y) return 0.0;
-        return ( (double)(this.y - that.y) ) / ( (double)(this.x - that.x) );
+        return ( (double)(this.y - that.y) ) / ( (double)(this.x - that.x) ); // NOTE: must cast to double!!!
     }
 
     /**
@@ -126,10 +126,8 @@ public class Point implements Comparable<Point> {
      */
     public static void main(String[] args) {
         /* YOUR CODE HERE */
-        Point p = new Point(1,1);
-        Point q = new Point(1,1);
-        Point r = new Point(12,17);
-        System.out.println(p.equals(q));
-        System.out.println(q.equals(r));
+        double x = Double.NEGATIVE_INFINITY;
+        double y = Double.POSITIVE_INFINITY;
+        System.out.println(x < y);
     }
 }

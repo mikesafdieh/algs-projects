@@ -7,7 +7,6 @@ import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Out;
-
 import java.util.Arrays;
 /***********************************************************************************************************************
  * public class BruteCollinearPoints {
@@ -19,7 +18,6 @@ import java.util.Arrays;
 
 public class BruteCollinearPoints {
 
-    //TODO: decide on proper instance variables
     private int numberOfSegments;
     private LineSegment[] segments;
 
