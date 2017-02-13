@@ -27,39 +27,64 @@ public class FastCollinearPoints {
      * @param points
      */
     public FastCollinearPoints(Point[] points) {
+        final int N = points.length;
+
+        // corner cases
+        if (points == null) throw new NullPointerException("argument is null");
+        for (int i = 0; i < N; i++)
+            if (points[i] == null) throw new NullPointerException("argument is null");
+
+
         //TODO: **DEBUG**
 
-        final int N = points.length;
         Point p, q1, q2;
         LineSegment[] tempSegs = new LineSegment[N];
+        Point[] tempPoints = new Point[N];
+//        Double[] slopes = new Double[N];
 
-        System.out.println("\nDEBUGGING\n\n");
-        System.out.println("Points:");
-        printPoints(points); // **DEBUG**
+        // copy points to temp points
+        for (int i = 0; i < N; i++)
+            tempPoints[i] = points[i];
+
+//        System.out.println("\nDEBUGGING\n\n"); // **DEBUG**
+//        System.out.println("Points:"); // **DEBUG**
+//        printPoints(points); // **DEBUG**
 
         // loop through each point p in points as the reference point for slopes
         for (int i = 0; i < N; i++) {
-//            System.out.println("Outer Loop: i = " + i);
+
             p = points[i];
             int numPoints = 0; // number of points in a given line segment
 
-            System.out.println("Reference point p: " + p);
-            Arrays.sort(points, p.slopeOrder()); // sort points by slopes with respect to point p
-            System.out.println("Points sorted by slope:");
-            printPoints(points);
+//            System.out.println("\n\n***********************************************************************************\n\n"); // **DEBUG**
+//            System.out.println("Reference point p: " + p); // **DEBUG**
+
+            Arrays.sort(tempPoints, p.slopeOrder()); // sort points by slopes with respect to point p
+
+//            System.out.println("Points sorted by slope:"); // **DEBUG**
+//            printPoints(tempPoints); // **DEBUG**
 
             for (int j = 2; j < N; j++) {
-                q1 = points[j];
-                q2 = points[j-1];
+                q1 = tempPoints[j-1];
+                q2 = tempPoints[j];
+
+//                System.out.println("numPoints: " + numPoints); // **DEBUG**
+//                System.out.println("j: " + j); // **DEBUG**
+//                System.out.println("slopes of " + q1 + " and " + q2 + ": "); // **DEBUG**
+//                System.out.println(p.slopeTo(q1) + " and " + p.slopeTo(q2)); // **DEBUG**
+//                System.out.println(); // **DEBUG**
+
                 if (p.slopeTo(q1) == p.slopeTo(q2)) {
                     numPoints++;
-                    continue;
                 }
-                if (numPoints >= 3) {
-                    System.out.println("!!!!numPoints >= 3!!!!");
-                    Arrays.sort(points, j - numPoints, j);
-                    tempSegs[numberOfSegments++] = new LineSegment(points[j-numPoints], points[j-1]);
+                else if (numPoints >= 3) {
+                    System.out.println("!!!! numPoints == " + numPoints + " !!!!"); // **DEBUG**
+
+                    Arrays.sort(tempPoints, j - numPoints, j); // sort by points to get the endpoints
+                    tempSegs[numberOfSegments++] = new LineSegment(tempPoints[j-numPoints], tempPoints[j-1]);
+                    Arrays.sort(tempPoints, j - numPoints, j, p.slopeOrder()); //resort subarray by slope for the outer loop
                 }
+                numPoints = 0;
             }
         }
 
