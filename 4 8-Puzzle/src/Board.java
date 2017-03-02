@@ -245,6 +245,7 @@ public final class Board {
     }
 
 
+
     /************************************************************************************************************
      *** TEST CLIENT ********************************************************************************************
      ************************************************************************************************************/
@@ -295,19 +296,3 @@ public final class Board {
         System.out.println();
     }
 }
-
-
-// Need the -1 to account for the 0 at the end which will never be equal to N*N
-
-//    private String tilesToString(int[][] tiles) {
-//        StringBuilder s = new StringBuilder();
-//        int n = tiles.length;
-//        int m = tiles[0].length;
-//        for (int i = 0; i < n; i++) {
-//            for (int j = 0; j < m; j++) {
-//                s.append(String.format("%2d ", tiles[i][j]));
-//            }
-//            s.append("\n");
-//        }
-//        return s.toString();
-//    }
